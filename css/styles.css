@@ -446,11 +446,10 @@ button { cursor: pointer; font-family: inherit; }
   position: absolute;
   width: var(--card-w);
   height: var(--card-h);
-  perspective: 900px;
   user-select: none;
   touch-action: none;
   z-index: 200;
-  animation: cardAppear 0.38s var(--spring) both;
+  animation: cardAppear 0.38s ease both;
 }
 
 @keyframes cardAppear {
@@ -467,23 +466,11 @@ button { cursor: pointer; font-family: inherit; }
   cursor: grabbing;
 }
 
-/* 3D flip container */
+/* Flip container — scaleX squish, no 3D perspective */
 .card-inner {
   width: 100%;
   height: 100%;
   position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.68s cubic-bezier(0.4, 0.01, 0.165, 0.99);
-}
-
-/* Flip state */
-.spread-card.flipped .card-inner {
-  transform: rotateY(180deg);
-}
-
-/* Reversed + flipped (upside down face) */
-.spread-card.flipped.reversed .card-inner {
-  transform: rotateY(180deg) rotateZ(180deg);
 }
 
 /* Both faces share these base rules */
@@ -491,9 +478,17 @@ button { cursor: pointer; font-family: inherit; }
   position: absolute;
   inset: 0;
   border-radius: var(--card-r);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   overflow: hidden;
+}
+
+/* Front hidden by default; shown after flip */
+.card-front { opacity: 0; pointer-events: none; }
+.spread-card.flipped .card-back  { opacity: 0; pointer-events: none; }
+.spread-card.flipped .card-front { opacity: 1; pointer-events: all; }
+
+/* Reversed: rotate front face 180° */
+.spread-card.flipped.reversed .card-front {
+  transform: rotate(180deg);
 }
 
 /* ── Card Back ── */
@@ -525,7 +520,6 @@ button { cursor: pointer; font-family: inherit; }
 
 /* ── Card Front ── */
 .card-front {
-  transform: rotateY(180deg);
   border: 1.5px solid var(--gold-dim);
   box-shadow: 0 8px 28px rgba(0,0,0,0.75);
   display: flex;
