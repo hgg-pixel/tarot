@@ -466,14 +466,19 @@ button { cursor: pointer; font-family: inherit; }
   cursor: grabbing;
 }
 
-/* Flip container — scaleX squish, no 3D perspective */
+/* Flip container — pure scaleX, zero 3D */
 .card-inner {
   width: 100%;
   height: 100%;
   position: relative;
+  transition: transform 0.14s ease-in;
 }
 
-/* Both faces share these base rules */
+.card-inner.expanding {
+  transition: transform 0.14s ease-out;
+}
+
+/* Both faces */
 .card-face {
   position: absolute;
   inset: 0;
@@ -481,43 +486,14 @@ button { cursor: pointer; font-family: inherit; }
   overflow: hidden;
 }
 
-/* Front hidden by default */
-.card-front { opacity: 0; pointer-events: none; }
+/* Front hidden until flipped */
+.card-front { display: none; }
+.spread-card.flipped .card-back  { display: none; }
+.spread-card.flipped .card-front { display: flex; }
 
-/* Flip: back fades out, front fades in with slight delay */
-.spread-card.flipping .card-back {
-  animation: faceOut 0.25s ease forwards;
-}
-.spread-card.flipped .card-back  { opacity: 0; pointer-events: none; }
-.spread-card.flipped .card-front {
-  opacity: 1;
-  pointer-events: all;
-  animation: faceIn 0.3s ease forwards;
-}
-
-@keyframes faceOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-@keyframes faceIn {
-  0%   { opacity: 0; transform: scale(0.92); }
-  60%  { opacity: 1; }
-  100% { opacity: 1; transform: scale(1); }
-}
-
-/* Reversed: rotate front face 180° */
+/* Reversed: upside-down front face */
 .spread-card.flipped.reversed .card-front {
   transform: rotate(180deg);
-}
-.spread-card.flipped.reversed .card-front {
-  animation: faceInReversed 0.3s ease forwards;
-}
-
-@keyframes faceInReversed {
-  0%   { opacity: 0; transform: rotate(180deg) scale(0.92); }
-  60%  { opacity: 1; }
-  100% { opacity: 1; transform: rotate(180deg) scale(1); }
 }
 
 /* ── Card Back ── */
