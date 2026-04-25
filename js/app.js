@@ -177,22 +177,12 @@ function createSpreadCard(card, isReversed) {
 }
 
 function flipCard(el, isReversed) {
-  const inner = el.querySelector('.card-inner')
-  // Phase 1: squish to 0
-  inner.style.transition = 'transform 0.15s ease-in'
-  inner.style.transform  = 'scaleX(0)'
+  el.classList.add('flipping')
   setTimeout(() => {
-    // Mid-flip: swap face
+    el.classList.remove('flipping')
     el.classList.add('flipped')
     if (isReversed) el.classList.add('reversed')
-    // Phase 2: expand back to full size
-    inner.style.transition = 'transform 0.15s ease-out'
-    inner.style.transform  = 'scaleX(1)'
-    setTimeout(() => {
-      inner.style.transition = ''
-      inner.style.transform  = ''
-    }, 150)
-  }, 150)
+  }, 250)
 }
 
 function rankLabel(card) {
