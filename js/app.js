@@ -223,6 +223,10 @@ function buildLibrary() {
         ${zSym ? `<span>${zSym}</span>` : ''}
         <span>${card.element}</span>
         <span>${card.numerology}</span>
+      </div>
+      <div class="lc-hover">
+        <span class="lc-hover-zh">${card.name_zh}</span>
+        <span class="lc-hover-en">${card.name_en}</span>
       </div>`
     el.addEventListener('click', () => {
       closeVeil('libVeil')
