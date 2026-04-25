@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✦ TAROT · 塔罗</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400&family=Crimson+Pro:ital,wght@0,300;0,400;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <span class="logo-sym">✦</span>
+        <span class="logo-txt">TAROT</span>
+      </div>
+
+      <!-- Mode toggle -->
+      <div class="mode-toggle">
+        <button class="mode-btn active" data-mode="full">
+          <span class="mode-n">78</span>
+          <span class="mode-lbl">全牌组</span>
+        </button>
+        <button class="mode-btn" data-mode="major">
+          <span class="mode-n">22</span>
+          <span class="mode-lbl">大阿卡纳</span>
+        </button>
+      </div>
+
+      <!-- Deck -->
+      <div class="deck-area">
+        <div class="deck-stack" id="deckStack">
+          <div class="deck-card dc-3"></div>
+          <div class="deck-card dc-2"></div>
+          <div class="deck-card dc-1"></div>
+          <div class="deck-card dc-0">
+            <div class="back-corners">
+              <span>✦</span><span>✦</span>
+              <span>✦</span><span>✦</span>
+            </div>
+            <div class="back-central"><span class="back-moon">☽</span></div>
+          </div>
+          <div class="deck-empty" id="deckEmpty">牌已抽完</div>
+        </div>
+        <p class="deck-info">剩余 <b id="deckCount">78</b> 张</p>
+      </div>
+
+      <!-- Controls -->
+      <div class="ctrl-btns">
+        <button class="cbtn cbtn-gold" id="shuffleBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 4h3v3M14.5 6.5 20 4M17 20h3v-3M14.5 17.5 20 20M4 7l4 4-4 4"/></svg>
+          洗牌
+        </button>
+        <button class="cbtn cbtn-dim" id="clearBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+          清空
+        </button>
+        <button class="cbtn cbtn-dim" id="libraryBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="10" y="8" width="7" height="13" rx="1"/><rect x="17" y="11" width="4" height="10" rx="1"/></svg>
+          牌库
+        </button>
+      </div>
+
+      <p class="sidebar-tip">点击牌堆抽牌<br>拖拽自由排列<br>点击翻牌 · 再点查看解读</p>
+    </aside>
+
+    <!-- ── Spread Zone ── -->
+    <main class="spread-zone" id="spreadZone">
+      <canvas id="starsCanvas"></canvas>
+      <div class="spread-hint" id="spreadHint">
+        <div class="hint-star">✦</div>
+        <p class="hint-main">点击左侧牌堆开始抽牌</p>
+        <p class="hint-sub">将卡牌拖至此处，自由布局你的牌阵</p>
+      </div>
+    </main>
+
+  </div><!-- #app -->
+
+  <!-- ── Library Modal ── -->
+  <div class="modal-veil" id="libVeil">
+    <div class="modal-box lib-box">
+      <div class="modal-top">
+        <h2 class="modal-ttl">牌库 · ARCANA</h2>
+        <div class="lib-filters">
+          <button class="filt-btn active" data-filter="all">全部</button>
+          <button class="filt-btn" data-filter="major">大阿卡纳</button>
+          <button class="filt-btn" data-filter="wands">权杖</button>
+          <button class="filt-btn" data-filter="cups">圣杯</button>
+          <button class="filt-btn" data-filter="swords">宝剑</button>
+          <button class="filt-btn" data-filter="pentacles">星币</button>
+        </div>
+        <button class="x-btn" id="libClose">✕</button>
+      </div>
+      <div class="lib-grid" id="libGrid"></div>
+    </div>
+  </div>
+
+  <!-- ── Detail Modal ── -->
+  <div class="modal-veil" id="detailVeil">
+    <div class="modal-box detail-box">
+      <button class="x-btn" id="detailClose">✕</button>
+      <div class="detail-wrap">
+        <div id="detailVis"></div>
+        <div id="detailInfo"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/cards-data.js"></script>
+  <script src="js/deck.js"></script>
+  <script src="js/drag.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
