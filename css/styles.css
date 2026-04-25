@@ -528,7 +528,6 @@ button { cursor: pointer; font-family: inherit; }
   align-items: center;
   justify-content: space-between;
   padding: 8px 6px 6px;
-  position: relative;
   cursor: pointer;
 }
 
