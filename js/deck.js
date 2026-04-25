@@ -28,7 +28,7 @@ class Deck {
     const id = this.remaining.pop()
     return {
       card: getCardById(id),
-      isReversed: Math.random() < 0.2
+      isReversed: Math.random() < 0.5
     }
   }
 
