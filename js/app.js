@@ -394,29 +394,30 @@ function openExport() {
   const cards = spreadCards.map((entry, i) => {
     const card = getCardById(entry.id)
     const flipped = isFlippedEl(entry.el)
-    const obj = {
-      position: i + 1,
-      revealed: flipped,
-      orientation: flipped ? (entry.isReversed ? '逆位' : '正位') : null,
-      name_zh: card.name_zh,
-      name_en: card.name_en,
-      type: card.type === 'major' ? '大阿卡纳' : '小阿卡纳',
-      suit: card.suit || null,
-      number: card.number,
-      element: card.element,
-      planet: card.planet !== '—' ? card.planet : null,
-      zodiac: card.zodiac !== '—' ? card.zodiac : null,
-      numerology: card.numerology,
-      meaning: flipped
-        ? (entry.isReversed ? card.reversed : card.upright)
-        : null
+    return {
+      position:    i + 1,
+      card_id:     card.id,
+      revealed:    flipped,
+      orientation: flipped ? (entry.isReversed ? 'reversed' : 'upright') : null,
+      name_zh:     card.name_zh,
+      name_en:     card.name_en,
+      arcana:      card.type,
+      suit:        card.suit || null,
+      number:      card.number,
+      numerology:  card.numerology,
+      card_metadata: {
+        element: card.element,
+        planet:  card.planet !== '—' ? card.planet : null,
+        zodiac:  card.zodiac !== '—' ? card.zodiac : null,
+      }
     }
-    return obj
   })
 
   const payload = {
     exported_at: new Date().toISOString(),
-    mode: currentMode === 'full' ? '全牌组 (78张)' : '大阿卡纳 (22张)',
+    mode:        currentMode === 'full' ? 'full_78' : 'major_22',
+    question:    document.getElementById('exportQuestion').value.trim()   || null,
+    spread_name: document.getElementById('exportSpreadName').value.trim() || null,
     total_cards: cards.length,
     spread: cards
   }

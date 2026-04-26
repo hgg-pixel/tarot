@@ -998,6 +998,26 @@ button { cursor: pointer; font-family: inherit; }
 .copy-btn:hover { background: rgba(201,168,76,0.12); }
 .copy-btn.copied { color: #4ade80; border-color: #4ade80; }
 
+.export-inputs {
+  display: flex;
+  gap: 8px;
+  padding: 10px 20px 0;
+}
+.export-inputs input {
+  flex: 1;
+  padding: 7px 12px;
+  font-family: var(--font-d);
+  font-size: 12px;
+  color: var(--gold);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--gold-dim);
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.export-inputs input::placeholder { color: rgba(201,168,76,0.35); }
+.export-inputs input:focus { border-color: var(--gold); }
+
 .json-output {
   flex: 1;
   overflow-y: auto;
