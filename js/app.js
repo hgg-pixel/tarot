@@ -74,11 +74,28 @@ function setupEvents() {
     })
   })
 
+  // Export JSON
+  document.getElementById('exportBtn').addEventListener('click', openExport)
+  document.getElementById('exportClose').addEventListener('click', () => closeVeil('exportVeil'))
+  document.getElementById('exportVeil').addEventListener('click', e => {
+    if (e.target.id === 'exportVeil') closeVeil('exportVeil')
+  })
+  document.getElementById('copyJsonBtn').addEventListener('click', () => {
+    const text = document.getElementById('jsonOutput').textContent
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyJsonBtn')
+      btn.textContent = '已复制 ✓'
+      btn.classList.add('copied')
+      setTimeout(() => { btn.textContent = '复制'; btn.classList.remove('copied') }, 2000)
+    })
+  })
+
   // Keyboard: Escape closes modals
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       closeVeil('libVeil')
       closeVeil('detailVeil')
+      closeVeil('exportVeil')
     }
   })
 }
@@ -366,6 +383,47 @@ function initStars() {
     requestAnimationFrame(draw)
   }
   requestAnimationFrame(draw)
+}
+
+/* ══════════════════════════════════════════
+   Export JSON
+══════════════════════════════════════════ */
+function openExport() {
+  const isFlippedEl = el => el.classList.contains('flipped')
+
+  const cards = spreadCards.map((entry, i) => {
+    const card = getCardById(entry.id)
+    const flipped = isFlippedEl(entry.el)
+    const obj = {
+      position: i + 1,
+      revealed: flipped,
+      orientation: flipped ? (entry.isReversed ? '逆位' : '正位') : null,
+      name_zh: card.name_zh,
+      name_en: card.name_en,
+      type: card.type === 'major' ? '大阿卡纳' : '小阿卡纳',
+      suit: card.suit || null,
+      number: card.number,
+      element: card.element,
+      planet: card.planet !== '—' ? card.planet : null,
+      zodiac: card.zodiac !== '—' ? card.zodiac : null,
+      numerology: card.numerology,
+      meaning: flipped
+        ? (entry.isReversed ? card.reversed : card.upright)
+        : null
+    }
+    return obj
+  })
+
+  const payload = {
+    exported_at: new Date().toISOString(),
+    mode: currentMode === 'full' ? '全牌组 (78张)' : '大阿卡纳 (22张)',
+    total_cards: cards.length,
+    spread: cards
+  }
+
+  document.getElementById('jsonOutput').textContent =
+    JSON.stringify(payload, null, 2)
+  openVeil('exportVeil')
 }
 
 /* ── Boot ── */

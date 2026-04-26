@@ -974,6 +974,45 @@ button { cursor: pointer; font-family: inherit; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
 
+/* ── Export Modal ── */
+.export-box {
+  width: min(94vw, 720px);
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.copy-btn {
+  margin-left: auto;
+  padding: 5px 16px;
+  font-family: var(--font-d);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  background: transparent;
+  border: 1px solid var(--gold-dim);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.copy-btn:hover { background: rgba(201,168,76,0.12); }
+.copy-btn.copied { color: #4ade80; border-color: #4ade80; }
+
+.json-output {
+  flex: 1;
+  overflow-y: auto;
+  margin: 0;
+  padding: 18px 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.65;
+  color: #c9d1d9;
+  background: rgba(0,0,0,0.45);
+  border-top: 1px solid var(--gold-line);
+  white-space: pre;
+  user-select: all;
+}
+
 /* ══════════════════════════════════════════
    Responsive (narrow screens)
 ══════════════════════════════════════════ */
